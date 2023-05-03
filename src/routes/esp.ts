@@ -14,7 +14,7 @@ const disableTemporaly = () => {
     STATUS_ESP.enabled = false
     const timeout = setTimeout(() => {
         STATUS_ESP.enabled = true
-    }, 10000);
+    }, 15000);
 
     return {
         restoreStatus: () => {
