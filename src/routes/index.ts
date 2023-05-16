@@ -9,6 +9,7 @@ import espRoutes from './esp'
 import espSimulateRoutes from './esp.simulate'
 import suministrarRoutes from './suministrar'
 import contenedorRoutes from './contenedor'
+import alertasRoutes from './alertas'
 
 const router =  Router()
 router.use(userRoutes)
@@ -21,5 +22,6 @@ router.use(espRoutes)
 router.use('/simulate', espSimulateRoutes)
 router.use(suministrarRoutes)
 router.use(contenedorRoutes)
+router.use(alertasRoutes)
 
 export default router

@@ -25,7 +25,10 @@
       "jsonwebtoken": "^9.0.0",
       "local-devices": "^4.0.0",
       "node-fetch": "^2.6.9",
+      "node-pushover": "^1.0.0",
+      "pushover-notifications": "^1.2.2",
       "reflect-metadata": "^0.1.13",
+      "socket.io": "^4.6.1",
       "sqlite3": "^5.0.2",
       "typeorm": "0.3.12"
    },

@@ -1,6 +1,9 @@
 import { Router } from "express";
 import DB from "../data-source";
 import { Medicamento } from "../entity";
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
 
 const router = Router();
 const medicamentoRepository = DB.getRepository(Medicamento);
@@ -11,15 +14,22 @@ router.get("/medicamento/:id", async (req, res) => {
   const medicamento = await medicamentoRepository.findOneBy({ id: +id });
   if (!medicamento) return res.status(404).send();
 
-  return res.send(medicamento);
+  const { caducidad } = medicamento
+
+  return res.send({
+    ...medicamento,
+    caducidad: caducidad && dayjs(caducidad).utc().set('date', 2).format('YYYY-MM-DD'),
+  });
 });
 
 router.get("/medicamento", async (req, res) => {
-  console.log(req.params);
-  console.log(req.query);
-  
-  
-  const medicamentos = await medicamentoRepository.find();
+   
+  const medicamentosData = await medicamentoRepository.find();
+
+  const medicamentos = medicamentosData.map((medicamento) => ({
+    ...medicamento,
+    caducidad: medicamento.caducidad && dayjs(medicamento.caducidad).utc().set('date', 2).format('YYYY-MM-DD'),
+  }))
 
   return res.send(medicamentos);
 });

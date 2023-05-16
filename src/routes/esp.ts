@@ -3,6 +3,7 @@ import fetch from 'node-fetch'
 import DB from '../data-source'
 import { Contenedor, Dosis, Enfermero } from '../entity';
 import { Not } from 'typeorm';
+import { getAlerta } from '../utils/esp';
 
 const router = Router();
 
@@ -134,17 +135,21 @@ router.post('/esp/contenedor/:id/move', async (req, res) => {
             down: 'MOVER_ATRAS'
         }
 
+        const newPasoActual = direction === 'up' ? end : start;
+        const alerta = getAlerta(newPasoActual, pasosTotal)
+
         const payload = { 
             action: directionEnum[direction],
             motor,
             cantidad: 1,
-            PASOS: pasos
+            PASOS: pasos,
+            alerta
         }
 
         console.log(payload);  
 
         await contenedorRepository2.update({id: +id}, {
-            pasoActual: direction === 'up' ? end : start,
+            pasoActual: newPasoActual,
         })
 
         if(!STATUS_ESP.enabled){
@@ -220,16 +225,18 @@ router.post('/esp/dosis/:id/dispensar', async (req, res) => {
             || pasos === 0
         ) return res.status(400).send({message: 'El movimiento se sale del rango'})
 
+        const alerta = getAlerta(end, pasosTotal)
+
         const payload = { 
             action: 'MOVER_ADELANTE',
             motor,
             cantidad: 1,
-            PASOS: pasos
+            PASOS: pasos,
+            alerta
         }
 
         console.log(payload);
 
-        
         await contenedorRepository2.update({id: contenedor.id}, {
             pasoActual: end,
         })
@@ -261,6 +268,5 @@ router.post('/esp/dosis/:id/dispensar', async (req, res) => {
         return res.status(500).send({message: error?.message || 'Error al enviar la accion al esp'}) 
     })
 })
-
 
 export default router
