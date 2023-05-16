@@ -18,26 +18,35 @@ export const findEspIP = async () => {
     console.log(serverIp);
     
     const ips = DISABLE_SEARCH_IP ? [] : await searchEspIP()
-    
-    console.log('Server IP:', serverIp);
-    console.log(ips.length, 'network IP found');
     console.log(ips);
     
-    for (const ip of ips) {
-        console.log(ip);
-        try {
+    const foundIp = await new Promise<string>((resolve) => {
 
-            const url = `http://${ip}/sync?serverIp=${serverIp}`
-            const response = await fetch(url)  
-            console.log(response.status);
-            const body = await response.json();
+        if(DISABLE_SEARCH_IP){
+            resolve(null)
+        } else {
+            setTimeout(() => {
+                resolve(null)
+            }, 10000);
+        }
 
-            if(response.status === 200 && body.ip){
-                return `http://${body.ip}`
-            }
-            
-        } catch (error) {}
+        // Search esp accross network
+        ips.forEach(async (ip) => {
+            try {
+                const url = `http://${ip}/sync?serverIp=${serverIp}`
+                    const response = await fetch(url)  
+                    console.log(ip, response.status);
+                    const body = await response.json();
+        
+                    if(response.status === 200 && body.ip){
+                        resolve(`http://${body.ip}`)
+                    }    
+            } catch (error) {}
+        })
 
-    }
-    return `http://localhost:${PORT}/api/simulate`
+    }).catch<null>(() => null)
+
+    if(foundIp) return foundIp
+    else return `http://localhost:${PORT}/api/simulate`
+
 }
