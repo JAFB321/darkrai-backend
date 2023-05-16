@@ -20,6 +20,9 @@ export class Dosis {
     @Column({default: false})
     suministrado: boolean
 
+    @Column({default: false})
+    alertado?: boolean
+
     @Column({nullable: true})
     cantidadSuministrada?: number
 

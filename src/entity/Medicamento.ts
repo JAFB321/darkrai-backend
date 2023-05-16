@@ -14,6 +14,12 @@ export class Medicamento {
     @Column()
     concentrado: number
 
+    @Column({nullable: true})
+    lote: number
+
+    @Column({nullable: true})
+    caducidad: Date
+
     @OneToMany(() => PlanMedicacion, (planMedicacion) => planMedicacion.medicamento)
     planesMedicacion: PlanMedicacion[]
 
