@@ -65,5 +65,6 @@ export const getAlertas = async () => {
 }
 
 export const registrarAlertas = (dosisId: string) => {
+    if(!dosisId) return
     return dosisRepository.update({id: +dosisId}, { alertado: true })
 }

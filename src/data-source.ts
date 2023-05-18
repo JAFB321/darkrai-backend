@@ -14,6 +14,6 @@ export default new DataSource({
     entities: [User, Medicamento, Enfermero, Dosis, Paciente, PlanMedicacion, Tratamiento, Contenedor],
     subscribers: [],
     migrationsTableName: "migrations",
-    migrations: [seeder1682973485585, seederContenedores1682998547686],
+    // migrations: [seeder1682973485585, seederContenedores1682998547686],
     migrationsRun: true
 })

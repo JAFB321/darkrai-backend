@@ -27,13 +27,13 @@ export const findEspIP = async () => {
         } else {
             setTimeout(() => {
                 resolve(null)
-            }, 10000);
+            }, 30000);
         }
 
         // Search esp accross network
         ips.forEach(async (ip) => {
             try {
-                const url = `http://${ip}/sync?serverIp=${serverIp}`
+                    const url = `http://${ip}/sync?serverIp=${serverIp}`
                     const response = await fetch(url)  
                     console.log(ip, response.status);
                     const body = await response.json();

@@ -1,12 +1,7 @@
 import { Router } from "express";
-import dayjs from 'dayjs'
-import { Dosis } from "../entity";
-import { Between } from "typeorm";
-import DB from "../data-source";
 import { getAlertas, registrarAlertas } from "./alertas.service";
 
 const router = Router();
-const dosisRepository = DB.getRepository(Dosis);
 
 router.get("/alerta", async (req, res) => {
     const alertas = await getAlertas()

@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from "typeorm"
+import { MigrationInterface, QueryRunner, Table } from "typeorm"
 
 export class seederContenedores1682998547686 implements MigrationInterface {
 

@@ -37,6 +37,7 @@ router.post('/esp/action', async (req, res) => {
         action: body.action,
         motor: Number(body.motor),
         cantidad: Number(body.cantidad),
+        // alerta: Number(body.alerta),
         PASOS: Number(body.PASOS)
     }
 
@@ -142,8 +143,8 @@ router.post('/esp/contenedor/:id/move', async (req, res) => {
             action: directionEnum[direction],
             motor,
             cantidad: 1,
+            // alerta,
             PASOS: pasos,
-            alerta
         }
 
         console.log(payload);  
@@ -231,8 +232,8 @@ router.post('/esp/dosis/:id/dispensar', async (req, res) => {
             action: 'MOVER_ADELANTE',
             motor,
             cantidad: 1,
+            // alerta,
             PASOS: pasos,
-            alerta
         }
 
         console.log(payload);

@@ -19,7 +19,7 @@ export class Paciente {
     @Column({nullable: true})
     peso: number
 
-    @Column({nullable: true})
+    @Column({nullable: true, type: 'float'})
     altura: number
 
     @Column({nullable: true})

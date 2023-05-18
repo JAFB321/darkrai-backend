@@ -14,10 +14,11 @@ export class NotificationsScheduler {
 
     setTimeout(() => {
       this.checkAlerts().catch(console.error)
+      this.sendOpenApp().catch(console.error)
     }, 500);
 
     this.intervalID = setInterval(() => {
-      this.checkAlerts()
+      this.checkAlerts().catch(console.error)
     }, 10000)
     // 60000
   }
@@ -44,6 +45,15 @@ export class NotificationsScheduler {
 
     const dosisIds = alertas.map(({dosis}) => dosis.id)
     await Promise.allSettled(dosisIds.map((dosisId) => registrarAlertas(dosisId+'')))
+  }
+
+  async sendOpenApp(){
+    pushAlert({
+      message: 'Bienvenido, el sistema esta listo',
+      title: 'Darkrai',
+      url: `http://${localIp}:3000/`,
+      url_title: 'Abrir app'
+    })
   }
 }
 
